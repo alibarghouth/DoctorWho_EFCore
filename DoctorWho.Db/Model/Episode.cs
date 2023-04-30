@@ -2,11 +2,6 @@
 {
     public class Episode
     {
-        public Episode()
-        {
-            EpisodeEnemies = new List<EpisodeEnemy>();
-            EpisodeCompanions = new List<EpisodeCompanion>();
-        }
         public int Id { get; set; }
         public int SeriesNumber { get; set; }
         public int EpisodeNumber { get; set; }
@@ -18,7 +13,7 @@
         public string Notes { get; set; }
         public Author Author { get; set; }
         public Doctor Doctor { get; set; }
-        public List<EpisodeEnemy> EpisodeEnemies { get; set; }
-        public List<EpisodeCompanion> EpisodeCompanions { get; set; }
+        public List<EpisodeEnemy> EpisodeEnemies { get; set; } = default!;
+        public List<EpisodeCompanion> EpisodeCompanions { get; set; } = default!;
     }
 }

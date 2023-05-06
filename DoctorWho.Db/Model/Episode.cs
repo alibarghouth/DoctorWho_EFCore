@@ -1,7 +1,10 @@
-﻿namespace DoctorWho.Db.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DoctorWho.Db.Model
 {
     public class Episode
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int SeriesNumber { get; set; }
         public int EpisodeNumber { get; set; }

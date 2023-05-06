@@ -1,4 +1,5 @@
-﻿using DoctorWho.Db.Model;
+﻿using DoctorWho.Db.Configurations;
+using DoctorWho.Db.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.Context
@@ -7,7 +8,7 @@ namespace DoctorWho.Db.Context
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=ALI-J-BARGHOUTH;Initial Catalog=DoctorWhoCore;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.AddDoctorWhoConfiguration();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

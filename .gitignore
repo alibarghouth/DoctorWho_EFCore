@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+/DoctorWho.Db/Migrations/
+/DoctorWho.Db/DoctorWho.Db.csproj

@@ -18,8 +18,8 @@ namespace DoctorWho.Db.Configurations
 
             IConfiguration config = builder.Build();
 
-            var AppSettings = config.GetSection("ConnectionStrings").Get<ConnectionStrings>();
-            optionsBuilder.UseSqlServer(AppSettings?.DefaultConnection);
+            var connectionString = config.GetSection("ConnectionStrings").Get<ConnectionStrings>();
+            optionsBuilder.UseSqlServer(connectionString?.DefaultConnection);
         }
     }
 }

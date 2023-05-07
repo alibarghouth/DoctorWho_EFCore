@@ -1,5 +1,6 @@
 ﻿using DoctorWho.Db.Configurations;
 using DoctorWho.Db.Model;
+using DoctorWho.Db.ModelCreating;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.Context
@@ -12,20 +13,7 @@ namespace DoctorWho.Db.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Enemy>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<Author>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<Companion>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<Episode>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<Enemy>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<EpisodeEnemy>()
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<EpisodeCompanion>()
-                .HasKey(e => e.Id);
+            modelBuilder.CreationModel();
         }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Companion> Companions { get; set; }

@@ -19,7 +19,7 @@ namespace DoctorWho.Db.Configurations
             IConfiguration config = builder.Build();
 
             var connectionString = config.GetSection("ConnectionStrings").Get<ConnectionStrings>();
-            optionsBuilder.UseSqlServer(connectionString?.DefaultConnection);
+            optionsBuilder.UseSqlServer(connectionString.DefaultConnection);
         }
     }
 }

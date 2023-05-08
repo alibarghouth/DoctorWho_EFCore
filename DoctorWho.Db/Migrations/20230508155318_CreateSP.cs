@@ -16,7 +16,7 @@ namespace DoctorWho.Db.Migrations
                             	SELECT 
                             	   TOP 3 c.Name, COUNT(*) AS CompanionCount
                             	FROM 
-                            	   EpisodeCompanion EC  JOIN Companion C
+                            	   EpisodeCompanions EC  JOIN Companions C
                             	ON 
                             	   C.Id = EC.CompanionId 
                             	GROUP BY Name

@@ -19,8 +19,8 @@ namespace DoctorWho.Db.Migrations
                                         	SELECT
                                         		@return_value = COALESCE(@return_value + ', ','') + C.Name 
                                         	FROM
-                                        		Companion C
-                                        	JOIN EpisodeCompanion E 
+                                        		Companions C
+                                        	JOIN EpisodeCompanions E 
                                         		ON C.Id = E.CompanionId
                                         	WHERE
                                         		E.EpisodeId = @id;

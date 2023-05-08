@@ -17,10 +17,10 @@ namespace DoctorWho.Db.Migrations
                                 BEGIN
                                 DECLARE @return_value VARCHAR(MAX)
                                 	SELECT
-                                		@return_value =  COALESCE(@return_value + ', ','') + EnemyName 
+                                		@return_value =  COALESCE(@return_value + ', ','') + Name 
                                 	FROM
-                                		Enemy C
-                                	JOIN EpisodeEnemy E 
+                                		Enemies C
+                                	JOIN EpisodeEnemies E 
                                 		ON C.Id = E.EnemyId
                                 	WHERE
                                 		E.EpisodeId = @id;

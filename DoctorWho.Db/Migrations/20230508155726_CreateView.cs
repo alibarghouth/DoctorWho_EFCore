@@ -12,14 +12,14 @@ namespace DoctorWho.Db.Migrations
         {
             var view = @"CREATE VIEW viewEpisodes AS
                           SELECT 
-                             E.Id, E.Title, A.Name, D.Name,
+                             E.Id, Title, A.Name AS AuthorName, D.Name DoctorName,
                              dbo.fnCompanions(E.Id) AS Companions, dbo.fnEnemies(E.Id) AS Enemies
                           FROM 
-                             Episode E
+                             Episodes E
                           JOIN 
-                             Doctor D ON E.DoctorId = D.Id
+                             Doctors D ON E.DoctorId = D.Id
                           JOIN 
-                             Author A ON E.AuthorId = A.Id;";
+                             Authors A ON E.AuthorId = A.Id;";
 
             migrationBuilder.Sql(view);
         }

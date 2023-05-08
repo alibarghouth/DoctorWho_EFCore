@@ -1,4 +1,5 @@
-﻿using DoctorWho.Db.Model;
+﻿using DoctorWho.Db.Context;
+using DoctorWho.Db.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.ModelCreating
@@ -26,6 +27,9 @@ namespace DoctorWho.Db.ModelCreating
                 .HasKey(e => e.Id);
             modelBuilder.Entity<EpisodeCompanion>()
                 .HasKey(e => e.Id);
+            modelBuilder.Entity<ViewEpisodes>()
+                .ToView("viewEpisodes")
+                .HasNoKey();
         }
         private static void SeedingData(ModelBuilder modelBuilder)
         {

@@ -11,9 +11,9 @@ namespace DoctorWho.Services.CompanionsService
             _companionsRepository = companionsRepository;
         }
 
-        public IEnumerable<string> GetCompanionsByEpisodeIdUsingFun(int id)
+        public async Task<IEnumerable<string>> GetCompanionsByEpisodeIdUsingFun(int id)
         {
-            return _companionsRepository.GetCompanionsByEpisodeIdUsingFun(id);
+            return await _companionsRepository.GetCompanionsByEpisodeIdUsingFun(id);
         }
     }
 }

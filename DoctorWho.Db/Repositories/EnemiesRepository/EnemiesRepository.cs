@@ -1,4 +1,5 @@
 ﻿using DoctorWho.Db.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.Repository.EnemiesRepository
 {
@@ -11,11 +12,11 @@ namespace DoctorWho.Db.Repository.EnemiesRepository
             _dbContext = dbContext;
         }
 
-        public IEnumerable<string> GetAllEnemiesNameByEpisodeId(int id)
+        public async Task<IEnumerable<string>> GetAllEnemiesNameByEpisodeId(int id)
         {
-            return _dbContext.Enemies
+            return await _dbContext.Enemies
                 .Select(x => _dbContext.FnEnemies(id))
-                .ToList();
+                .ToListAsync();
         }
     }
 }

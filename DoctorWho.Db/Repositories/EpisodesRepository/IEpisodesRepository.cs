@@ -4,6 +4,6 @@ namespace DoctorWho.Db.Repository.EpisodesRepository
 {
     public interface IEpisodesRepository
     {
-        IEnumerable<ViewEpisodes> GetEpisodeUsingView();
+        Task<IEnumerable<ViewEpisodes>> GetEpisodeUsingView();
     }
 }

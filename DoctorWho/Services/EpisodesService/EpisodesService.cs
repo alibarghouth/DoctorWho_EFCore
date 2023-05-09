@@ -12,9 +12,9 @@ namespace DoctorWho.Services.EpisodesService
             _episodesRepository = episodesRepository;
         }
 
-        public IEnumerable<ViewEpisodes> GetEpisodeUsingView()
+        public async Task<IEnumerable<ViewEpisodes>> GetEpisodeUsingView()
         {
-            return _episodesRepository.GetEpisodeUsingView();
+            return await _episodesRepository.GetEpisodeUsingView();
         }
     }
 }

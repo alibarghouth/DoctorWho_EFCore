@@ -1,5 +1,6 @@
 ﻿using DoctorWho.Db.Context;
 using DoctorWho.Db.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.Repository.EpisodesRepository
 {
@@ -12,9 +13,9 @@ namespace DoctorWho.Db.Repository.EpisodesRepository
             _dbContext = dbContext;
         }
 
-        public IEnumerable<ViewEpisodes> GetEpisodeUsingView()
+        public async Task<IEnumerable<ViewEpisodes>> GetEpisodeUsingView()
         {
-            return _dbContext.ViewEpisodes.ToList();
+            return await _dbContext.ViewEpisodes.ToListAsync();
         }
     }
 }

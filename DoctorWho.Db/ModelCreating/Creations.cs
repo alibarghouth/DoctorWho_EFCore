@@ -1,5 +1,4 @@
-﻿using DoctorWho.Db.Context;
-using DoctorWho.Db.Model;
+﻿using DoctorWho.Db.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.ModelCreating

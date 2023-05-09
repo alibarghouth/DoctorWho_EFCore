@@ -4,6 +4,6 @@ namespace DoctorWho.Db.Repository.CompanionsRepository
 {
     public interface ICompanionsRepository
     {
-        IEnumerable<string> GetCompanionsByEpisodeIdUsingFun(int id);
+        Task<IEnumerable<string>> GetCompanionsByEpisodeIdUsingFun(int id);
     }
 }

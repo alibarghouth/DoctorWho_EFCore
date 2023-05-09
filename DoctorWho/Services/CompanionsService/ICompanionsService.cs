@@ -2,6 +2,6 @@
 {
     public interface ICompanionsService
     {
-        IEnumerable<string> GetCompanionsByEpisodeIdUsingFun(int id);
+        Task<IEnumerable<string>> GetCompanionsByEpisodeIdUsingFun(int id);
     }
 }

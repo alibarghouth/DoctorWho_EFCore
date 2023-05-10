@@ -27,7 +27,7 @@ namespace DoctorWho.Db.ModelCreating
             modelBuilder.Entity<EpisodeCompanion>()
                 .HasKey(e => e.Id);
             modelBuilder.Entity<EpisodesView>()
-                .ToView("viewEpisodes")
+                .ToView("EpisodesView")
                 .HasNoKey();
         }
         private static void SeedingData(ModelBuilder modelBuilder)

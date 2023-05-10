@@ -11,9 +11,9 @@ namespace DoctorWho.Services.EnemiesService
             _enemiesRepository = enemiesRepository;
         }
 
-        public async Task<IEnumerable<string>> GetAllEnemiesNameByEpisodeId(int id)
+        public async Task<string> GetAllEnemiesNameByEpisodeId(int episodeId)
         {
-            return await _enemiesRepository.GetAllEnemiesNameByEpisodeId(id);
+            return await _enemiesRepository.GetAllEnemiesNameByEpisodeId(episodeId);
         }
     }
 }

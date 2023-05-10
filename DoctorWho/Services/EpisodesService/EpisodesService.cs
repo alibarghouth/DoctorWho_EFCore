@@ -1,5 +1,5 @@
 ﻿using DoctorWho.Db.Model;
-using DoctorWho.Db.Repository.EpisodesRepository;
+using DoctorWho.Db.Repositories.EpisodesRepository;
 
 namespace DoctorWho.Services.EpisodesService
 {
@@ -12,9 +12,9 @@ namespace DoctorWho.Services.EpisodesService
             _episodesRepository = episodesRepository;
         }
 
-        public async Task<IEnumerable<ViewEpisodes>> GetEpisodeUsingView()
+        public async Task<IEnumerable<ViewEpisodes>> GetEpisode()
         {
-            return await _episodesRepository.GetEpisodeUsingView();
+            return await _episodesRepository.GetEpisode();
         }
     }
 }

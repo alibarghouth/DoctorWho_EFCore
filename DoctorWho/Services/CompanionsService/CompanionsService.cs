@@ -1,4 +1,4 @@
-﻿using DoctorWho.Db.Repository.CompanionsRepository;
+﻿using DoctorWho.Db.Repositories.CompanionsRepository;
 
 namespace DoctorWho.Services.CompanionsService
 {
@@ -11,9 +11,9 @@ namespace DoctorWho.Services.CompanionsService
             _companionsRepository = companionsRepository;
         }
 
-        public async Task<IEnumerable<string>> GetCompanionsByEpisodeIdUsingFun(int id)
+        public async Task<string> GetCompanionsByEpisodeId(int episodeId)
         {
-            return await _companionsRepository.GetCompanionsByEpisodeIdUsingFun(id);
+            return await _companionsRepository.GetCompanionsByEpisodeId(episodeId);
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using DoctorWho.Db.Context;
+using DoctorWho.Db.Repositories.CompanionsRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace DoctorWho.Db.Repository.CompanionsRepository
+namespace DoctorWho.Db.Repositories.CompanionsRepository
 {
     public class CompanionsRepository : ICompanionsRepository
     {
@@ -12,11 +13,9 @@ namespace DoctorWho.Db.Repository.CompanionsRepository
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<string>> GetCompanionsByEpisodeIdUsingFun(int id)
+        public async Task<string> GetCompanionsByEpisodeId(int episodeId)
         {
-            return await _dbContext.Companions
-                .Select(x => _dbContext.FnCompanions(id))
-                .ToListAsync();
+            return await Task.Run(() => _dbContext.FnCompanions(episodeId));
         }
     }
 }

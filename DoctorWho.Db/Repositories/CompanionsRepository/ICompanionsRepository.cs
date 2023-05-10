@@ -1,9 +1,9 @@
 ﻿using DoctorWho.Db.Model;
 
-namespace DoctorWho.Db.Repository.CompanionsRepository
+namespace DoctorWho.Db.Repositories.CompanionsRepository
 {
     public interface ICompanionsRepository
     {
-        Task<IEnumerable<string>> GetCompanionsByEpisodeIdUsingFun(int id);
+         Task<string> GetCompanionsByEpisodeId(int episodeId);
     }
 }

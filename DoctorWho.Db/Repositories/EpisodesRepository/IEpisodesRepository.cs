@@ -1,9 +1,9 @@
 ﻿using DoctorWho.Db.Model;
 
-namespace DoctorWho.Db.Repository.EpisodesRepository
+namespace DoctorWho.Db.Repositories.EpisodesRepository
 {
     public interface IEpisodesRepository
     {
-        Task<IEnumerable<ViewEpisodes>> GetEpisodeUsingView();
+        Task<IEnumerable<ViewEpisodes>> GetEpisode();
     }
 }

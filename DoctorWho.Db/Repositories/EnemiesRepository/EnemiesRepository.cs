@@ -12,11 +12,9 @@ namespace DoctorWho.Db.Repository.EnemiesRepository
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<string>> GetAllEnemiesNameByEpisodeId(int id)
+        public async Task<string> GetAllEnemiesNameByEpisodeId(int episodeId)
         {
-            return await _dbContext.Enemies
-                .Select(x => _dbContext.FnEnemies(id))
-                .ToListAsync();
+            return await  Task.Run(() => _dbContext.FnEnemies(episodeId));
         }
     }
 }

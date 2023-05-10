@@ -2,6 +2,6 @@
 {
     public interface IEnemiesRepository
     {
-        Task<IEnumerable<string>> GetAllEnemiesNameByEpisodeId(int id);
+        Task<string> GetAllEnemiesNameByEpisodeId(int episodeId);
     }
 }

@@ -27,7 +27,7 @@ namespace DoctorWho.Db.Context
         public DbSet<Enemy> Enemies { get; set; }
         public DbSet<EpisodeCompanion> EpisodeCompanions { get; set; }
         public DbSet<EpisodeEnemy> EpisodeEnemies { get; set; }
-        public DbSet<ViewEpisodes> ViewEpisodes { get; set; }
+        public DbSet<ViewEpisodes> EpisodesView { get; set; }
 
         public string FnCompanions(int EpisodeId) => throw new NotSupportedException();
         public string FnEnemies(int EpisodeId) => throw new NotSupportedException();

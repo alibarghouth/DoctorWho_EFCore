@@ -1,6 +1,6 @@
 ﻿namespace DoctorWho.Db.Model
 {
-    public class ViewEpisodes
+    public class EpisodesView
     {
         public int Id { get; set; }
         public string Title { get; set; }

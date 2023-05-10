@@ -13,7 +13,7 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<ViewEpisodes>> GetEpisode()
+        public async Task<IEnumerable<EpisodesView>> GetEpisode()
         {
             return await _dbContext.EpisodesView.ToListAsync();
         }

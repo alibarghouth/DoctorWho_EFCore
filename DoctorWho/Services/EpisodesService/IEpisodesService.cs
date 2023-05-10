@@ -4,6 +4,6 @@ namespace DoctorWho.Services.EpisodesService
 {
     public interface IEpisodesService
     {
-        Task<IEnumerable<ViewEpisodes>> GetEpisode();
+        Task<IEnumerable<EpisodesView>> GetEpisode();
     }
 }

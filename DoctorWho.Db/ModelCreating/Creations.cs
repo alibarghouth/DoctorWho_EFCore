@@ -26,7 +26,7 @@ namespace DoctorWho.Db.ModelCreating
                 .HasKey(e => e.Id);
             modelBuilder.Entity<EpisodeCompanion>()
                 .HasKey(e => e.Id);
-            modelBuilder.Entity<ViewEpisodes>()
+            modelBuilder.Entity<EpisodesView>()
                 .ToView("viewEpisodes")
                 .HasNoKey();
         }

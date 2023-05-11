@@ -9,5 +9,6 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
          Task<Companion?> AddCompanionAsync(CompanionRequestModel request);
          Task<bool> DeleteCompanionAsync(int companionId);
          Task<bool> UpdateCompanionAsync(CompanionRequestModel request, int companionId);
+         Task<Companion?> GetCompanionById(int companionId);
     }
 }

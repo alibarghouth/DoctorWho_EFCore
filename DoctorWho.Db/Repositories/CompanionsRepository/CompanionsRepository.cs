@@ -54,6 +54,11 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
             return true;
         }
 
+        public async Task<Companion?> GetCompanionById(int companionId)
+        {
+            return await FindCompanionById(companionId);
+        }
+
         private async Task<Companion?> FindCompanionById(int companionId)
         {
             var companion = await _dbContext.Companions.FindAsync(companionId);

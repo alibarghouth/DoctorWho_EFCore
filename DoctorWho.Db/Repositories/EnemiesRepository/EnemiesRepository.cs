@@ -53,6 +53,11 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
             return true;
         }
 
+        public async Task<Enemy?> GetEnemyById(int enemyId)
+        {
+            return await FindEnemyById(enemyId);
+        }
+
         private async Task<Enemy?> FindEnemyById(int enemyId)
         {
             return await _dbContext.Enemies.FindAsync(enemyId);

@@ -2,6 +2,7 @@
 using DoctorWho.Db.Context;
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoctorWho.Db.Repositories.DoctorRepository;
 
@@ -46,6 +47,11 @@ public class DoctorRepository : IDoctorRepository
         _dbContext.Doctors.Update(doctor);
 
         return true;
+    }
+
+    public async Task<IEnumerable<Doctor>> GetAllDoctors()
+    {
+        return await _dbContext.Doctors.ToListAsync();
     }
 
     private async Task<Doctor?> FindDoctorById(int doctorId)

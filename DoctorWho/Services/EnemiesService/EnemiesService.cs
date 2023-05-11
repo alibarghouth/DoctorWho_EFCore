@@ -47,5 +47,10 @@ namespace DoctorWho.Services.EnemiesService
                 return "failed";
             return "success";
         }
+
+        public async Task<Enemy?> GetEnemyById(int enemyId)
+        {
+            return await _enemiesRepository.GetEnemyById(enemyId);
+        }
     }
 }

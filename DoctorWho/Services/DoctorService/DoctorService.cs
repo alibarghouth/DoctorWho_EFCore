@@ -1,4 +1,5 @@
 ﻿using DoctorWho.Db.DTOS;
+using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.DoctorRepository;
 
 namespace DoctorWho.Services.DoctorService;
@@ -40,5 +41,10 @@ public class DoctorService : IDoctorService
         if (!result)
             return "failed";
         return "success";
+    }
+
+    public async Task<IEnumerable<Doctor>> GetAllDoctors()
+    {
+        return await _doctorRepository.GetAllDoctors();
     }
 }

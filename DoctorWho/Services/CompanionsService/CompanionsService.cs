@@ -1,4 +1,5 @@
 ﻿using DoctorWho.Db.DTOS;
+using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.CompanionsRepository;
 
 namespace DoctorWho.Services.CompanionsService
@@ -46,6 +47,11 @@ namespace DoctorWho.Services.CompanionsService
             if (!result)
                 return "failed";
             return "success";
+        }
+
+        public async Task<Companion?> GetCompanionById(int companionId)
+        {
+            return await _companionsRepository.GetCompanionById(companionId);
         }
     }
 }

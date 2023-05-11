@@ -9,5 +9,6 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
         Task<Enemy?> AddEnemyAsync(EnemyRequestModel request);
         Task<bool> DeleteEnemyAsync(int enemyId);
         Task<bool> UpdateEnemyAsync(EnemyRequestModel request, int enemyId);
+        Task<Enemy?> GetEnemyById(int enemyId);
     }
 }

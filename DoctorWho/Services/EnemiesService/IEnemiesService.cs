@@ -9,5 +9,7 @@ namespace DoctorWho.Services.EnemiesService
         Task<string> AddEnemyAsync(EnemyRequestModel request);
         Task<string> DeleteEnemyAsync(int enemyId);
         Task<string> UpdateEnemyAsync(EnemyRequestModel request, int enemyId);
+        Task<Enemy?> GetEnemyById(int enemyId);
+
     }
 }

@@ -26,6 +26,7 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
         {
             var companion = _mapper.Map<Companion>(request);
             await _dbContext.Companions.AddAsync(companion);
+            await _dbContext.SaveChangesAsync();
 
             return companion;
         }
@@ -37,6 +38,8 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
                 return false;
 
             _dbContext.Companions.Remove(companion);
+            await _dbContext.SaveChangesAsync();
+
             return true;
         }
 
@@ -50,20 +53,19 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
             if (!string.IsNullOrEmpty(request.WhoPlayed))
                 companion.WhoPlayed = request.WhoPlayed;
             _dbContext.Companions.Update(companion);
+            await _dbContext.SaveChangesAsync();
 
             return true;
         }
-
-        public async Task<Companion?> GetCompanionById(int companionId)
-        {
-            return await FindCompanionById(companionId);
-        }
-
         private async Task<Companion?> FindCompanionById(int companionId)
         {
             var companion = await _dbContext.Companions.FindAsync(companionId);
 
             return companion;
+        }
+        public async Task<Companion?> GetCompanionById(int companionId)
+        {
+            return await FindCompanionById(companionId);
         }
     }
 }

@@ -21,6 +21,7 @@ public class DoctorRepository : IDoctorRepository
     {
         var doctor = _mapper.Map<Doctor>(request);
         await _dbContext.Doctors.AddAsync(doctor);
+        await _dbContext.SaveChangesAsync();
 
         return doctor;
     }
@@ -31,6 +32,7 @@ public class DoctorRepository : IDoctorRepository
         if (doctor is null)
             return false;
         _dbContext.Doctors.Remove(doctor);
+        await _dbContext.SaveChangesAsync();
 
         return true;
     }
@@ -45,6 +47,7 @@ public class DoctorRepository : IDoctorRepository
         if (!string.IsNullOrEmpty(request.Number))
             doctor.Number = request.Number;
         _dbContext.Doctors.Update(doctor);
+        await _dbContext.SaveChangesAsync();
 
         return true;
     }

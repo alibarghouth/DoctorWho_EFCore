@@ -20,7 +20,8 @@ public class AuthorRepository : IAuthorRepository
     {
         var author = _mapper.Map<Author>(request);
         await _dbContext.Authors.AddAsync(author);
-
+        await _dbContext.SaveChangesAsync();
+        
         return author;
     }
 
@@ -30,6 +31,8 @@ public class AuthorRepository : IAuthorRepository
         if (author is null)
             return false;
         _dbContext.Authors.Remove(author);
+        await _dbContext.SaveChangesAsync();
+
         return true;
     }
 
@@ -42,6 +45,7 @@ public class AuthorRepository : IAuthorRepository
             author.Name = request.Name;
         
         _dbContext.Authors.Update(author);
+        await _dbContext.SaveChangesAsync();
 
         return true;
     }

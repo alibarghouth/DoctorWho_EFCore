@@ -23,7 +23,8 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
         {
             var episode = _mapper.Map<Episode>(request);
             await _dbContext.Episodes.AddAsync(episode);
-            
+            await _dbContext.SaveChangesAsync();
+
             return episode;
         }
         public async Task<bool> DeleteEpisodeAsync(int enemyId)
@@ -32,7 +33,8 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
             if (episode is null)
                 return false;
             _dbContext.Episodes.Remove(episode);
-            
+            await _dbContext.SaveChangesAsync();
+
             return true;
         }
         public async Task<bool> UpdateEpisodeAsync(EpisodeRequestModel request, int enemyId)
@@ -48,7 +50,8 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
                 episode.Episodetype = request.Episodetype;
             
             _dbContext.Episodes.Update(episode);
-            
+            await _dbContext.SaveChangesAsync();
+
             return true;
         }
         private async Task<Episode?> FindEpisodeById(int episodeId)

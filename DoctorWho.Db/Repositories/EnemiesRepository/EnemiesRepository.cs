@@ -24,7 +24,8 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
         {
             var enemy = _mapper.Map<Enemy>(request);
             await _dbContext.Enemies.AddAsync(enemy);
-            
+            await _dbContext.SaveChangesAsync();
+
             return enemy;
         }
 
@@ -34,7 +35,8 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
             if (enemy is null)
                 return false;
             _dbContext.Enemies.Remove(enemy);
-            
+            await _dbContext.SaveChangesAsync();
+
             return true;
         }
 
@@ -49,7 +51,8 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
                 enemy.Description = request.Description;
 
             _dbContext.Enemies.Update(enemy);
-            
+            await _dbContext.SaveChangesAsync();
+
             return true;
         }
 

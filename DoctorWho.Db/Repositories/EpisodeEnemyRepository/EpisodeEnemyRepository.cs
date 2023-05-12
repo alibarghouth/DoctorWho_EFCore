@@ -20,6 +20,7 @@ public class EpisodeEnemyRepository : IEpisodeEnemyRepository
     {
         var episodeEnemy = _mapper.Map<EpisodeEnemy>(request);
         await _dbContext.EpisodeEnemies.AddAsync(episodeEnemy);
+        await _dbContext.SaveChangesAsync();
 
         return episodeEnemy;
     }

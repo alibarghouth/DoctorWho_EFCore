@@ -20,6 +20,7 @@ public class EpisodeCompanionRepository : IEpisodeCompanionRepository
     {
         var episodeCompanion = _mapper.Map<EpisodeCompanion>(request);
         await _dbContext.EpisodeCompanions.AddAsync(episodeCompanion);
+        await _dbContext.SaveChangesAsync();
 
         return episodeCompanion;
     }

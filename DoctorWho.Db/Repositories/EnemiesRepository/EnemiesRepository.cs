@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DoctorWho.Db.Context;
+﻿using DoctorWho.Db.Context;
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 
@@ -8,11 +7,9 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
     public class EnemiesRepository : IEnemiesRepository
     {
         private readonly DoctorWhoCoreDbContext _dbContext;
-        private readonly IMapper _mapper;
-        public EnemiesRepository(DoctorWhoCoreDbContext dbContext, IMapper mapper)
+        public EnemiesRepository(DoctorWhoCoreDbContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         public async Task<string> GetAllEnemiesNameByEpisodeId(int episodeId)
@@ -20,20 +17,18 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
             return await  Task.Run(() => _dbContext.FnEnemies(episodeId));
         }
 
-        public async Task<Enemy?> AddEnemyAsync(EnemyRequestModel request)
+        public async Task<Enemy> AddEnemyAsync(Enemy request)
         {
-            var enemy = _mapper.Map<Enemy>(request);
-            await _dbContext.Enemies.AddAsync(enemy);
+            await _dbContext.Enemies.AddAsync(request);
             await _dbContext.SaveChangesAsync();
 
-            return enemy;
+            return request;
         }
 
         public async Task<bool> DeleteEnemyAsync(int enemyId)
         {
             var enemy = await FindEnemyById(enemyId);
-            if (enemy is null)
-                return false;
+
             _dbContext.Enemies.Remove(enemy);
             await _dbContext.SaveChangesAsync();
 
@@ -43,8 +38,7 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
         public async Task<bool> UpdateEnemyAsync(EnemyRequestModel request, int enemyId)
         {
             var enemy = await FindEnemyById(enemyId);
-            if (enemy is null)
-                return false;
+
             if (!string.IsNullOrEmpty(request.Name))
                 enemy.Name = request.Name;
             if (!string.IsNullOrEmpty(request.Description))
@@ -56,12 +50,12 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
             return true;
         }
 
-        public async Task<Enemy?> GetEnemyById(int enemyId)
+        public async Task<Enemy> GetEnemyById(int enemyId)
         {
             return await FindEnemyById(enemyId);
         }
 
-        private async Task<Enemy?> FindEnemyById(int enemyId)
+        private async Task<Enemy> FindEnemyById(int enemyId)
         {
             return await _dbContext.Enemies.FindAsync(enemyId);
         }

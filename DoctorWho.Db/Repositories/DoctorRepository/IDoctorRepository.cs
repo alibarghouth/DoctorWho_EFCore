@@ -5,8 +5,8 @@ namespace DoctorWho.Db.Repositories.DoctorRepository;
 
 public interface IDoctorRepository
 {
-    Task<Doctor?> AddDoctorAsync(DoctorRequestModel request);
+    Task<Doctor> AddDoctorAsync(Doctor request);
     Task<bool> DeleteDoctorAsync(int doctorId);
     Task<bool> UpdateDoctorAsync(DoctorRequestModel request, int doctorId);
-    Task<IEnumerable<Doctor>> GetAllDoctors();
+    Task<List<Doctor>> GetAllDoctors();
 }

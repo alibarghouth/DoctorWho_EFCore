@@ -8,20 +8,17 @@ namespace DoctorWho.Db.Repositories.EpisodeCompanionRepository;
 public class EpisodeCompanionRepository : IEpisodeCompanionRepository
 {
     private readonly DoctorWhoCoreDbContext _dbContext;
-    private readonly IMapper _mapper;
 
-    public EpisodeCompanionRepository(DoctorWhoCoreDbContext dbContext, IMapper mapper)
+    public EpisodeCompanionRepository(DoctorWhoCoreDbContext dbContext)
     {
         _dbContext = dbContext;
-        _mapper = mapper;
     }
 
-    public async Task<EpisodeCompanion?> AddCompanionToEpisode(EpisodeCompanionRequestModel request)
+    public async Task<EpisodeCompanion> AddCompanionToEpisode(EpisodeCompanion request)
     {
-        var episodeCompanion = _mapper.Map<EpisodeCompanion>(request);
-        await _dbContext.EpisodeCompanions.AddAsync(episodeCompanion);
+        await _dbContext.EpisodeCompanions.AddAsync(request);
         await _dbContext.SaveChangesAsync();
 
-        return episodeCompanion;
+        return request;
     }
 }

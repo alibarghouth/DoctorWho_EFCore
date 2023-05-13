@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DoctorWho.Db.Context;
+﻿using DoctorWho.Db.Context;
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using Microsoft.EntityFrameworkCore;
@@ -9,29 +8,24 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
     public class EpisodesRepository : IEpisodesRepository
     {
         private readonly DoctorWhoCoreDbContext _dbContext;
-        private readonly IMapper _mapper;
-        public EpisodesRepository(DoctorWhoCoreDbContext dbContext, IMapper mapper)
+        public EpisodesRepository(DoctorWhoCoreDbContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
-        public async Task<IEnumerable<EpisodesView>> GetEpisode()
+        public async Task<List<EpisodesView>> GetEpisode()
         {
             return await _dbContext.EpisodesView.ToListAsync();
         }
-        public async Task<Episode?> AddEpisodeAsync(EpisodeRequestModel request)
+        public async Task<Episode?> AddEpisodeAsync(Episode request)
         {
-            var episode = _mapper.Map<Episode>(request);
-            await _dbContext.Episodes.AddAsync(episode);
+            await _dbContext.Episodes.AddAsync(request);
             await _dbContext.SaveChangesAsync();
 
-            return episode;
+            return request;
         }
         public async Task<bool> DeleteEpisodeAsync(int enemyId)
         {
             var episode = await FindEpisodeById(enemyId);
-            if (episode is null)
-                return false;
             _dbContext.Episodes.Remove(episode);
             await _dbContext.SaveChangesAsync();
 
@@ -40,8 +34,7 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
         public async Task<bool> UpdateEpisodeAsync(EpisodeRequestModel request, int enemyId)
         {
             var episode = await FindEpisodeById(enemyId);
-            if (episode is null)
-                return false;
+            
             if (!string.IsNullOrEmpty(request.Title))
                 episode.Title = request.Title;
             if (!string.IsNullOrEmpty(request.Notes))
@@ -54,7 +47,7 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
 
             return true;
         }
-        private async Task<Episode?> FindEpisodeById(int episodeId)
+        private async Task<Episode> FindEpisodeById(int episodeId)
         {
             return await _dbContext.Episodes.FindAsync(episodeId);
         }

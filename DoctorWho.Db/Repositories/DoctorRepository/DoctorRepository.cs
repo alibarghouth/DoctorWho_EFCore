@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DoctorWho.Db.Context;
+﻿using DoctorWho.Db.Context;
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using Microsoft.EntityFrameworkCore;
@@ -9,28 +8,24 @@ namespace DoctorWho.Db.Repositories.DoctorRepository;
 public class DoctorRepository : IDoctorRepository
 {
     private readonly DoctorWhoCoreDbContext _dbContext;
-    private readonly IMapper _mapper;
 
-    public DoctorRepository(DoctorWhoCoreDbContext dbContext, IMapper mapper)
+    public DoctorRepository(DoctorWhoCoreDbContext dbContext)
     {
         _dbContext = dbContext;
-        _mapper = mapper;
     }
 
-    public async Task<Doctor?> AddDoctorAsync(DoctorRequestModel request)
+    public async Task<Doctor> AddDoctorAsync(Doctor request)
     {
-        var doctor = _mapper.Map<Doctor>(request);
-        await _dbContext.Doctors.AddAsync(doctor);
+        await _dbContext.Doctors.AddAsync(request);
         await _dbContext.SaveChangesAsync();
 
-        return doctor;
+        return request;
     }
 
     public async Task<bool> DeleteDoctorAsync(int doctorId)
     {
         var doctor = await FindDoctorById(doctorId);
-        if (doctor is null)
-            return false;
+
         _dbContext.Doctors.Remove(doctor);
         await _dbContext.SaveChangesAsync();
 
@@ -40,8 +35,7 @@ public class DoctorRepository : IDoctorRepository
     public async Task<bool> UpdateDoctorAsync(DoctorRequestModel request, int doctorId)
     {
         var doctor = await FindDoctorById(doctorId);
-        if (doctor is null)
-            return false;
+
         if (!string.IsNullOrEmpty(request.Name))
             doctor.Name = request.Name;
         if (!string.IsNullOrEmpty(request.Number))
@@ -52,12 +46,12 @@ public class DoctorRepository : IDoctorRepository
         return true;
     }
 
-    public async Task<IEnumerable<Doctor>> GetAllDoctors()
+    public async Task<List<Doctor>> GetAllDoctors()
     {
         return await _dbContext.Doctors.ToListAsync();
     }
 
-    private async Task<Doctor?> FindDoctorById(int doctorId)
+    private async Task<Doctor> FindDoctorById(int doctorId)
     {
         return await _dbContext.Doctors.FindAsync(doctorId);
     }

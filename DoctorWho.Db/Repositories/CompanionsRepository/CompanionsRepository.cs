@@ -9,12 +9,10 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
     public class CompanionsRepository : ICompanionsRepository
     {
         private readonly DoctorWhoCoreDbContext _dbContext;
-        private readonly IMapper _mapper;
 
-        public CompanionsRepository(DoctorWhoCoreDbContext dbContext, IMapper mapper)
+        public CompanionsRepository(DoctorWhoCoreDbContext dbContext)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
         }
 
         public async Task<string> GetCompanionsByEpisodeId(int episodeId)
@@ -22,21 +20,18 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
             return await Task.Run(() => _dbContext.FnCompanions(episodeId));
         }
 
-        public async Task<Companion?> AddCompanionAsync(CompanionRequestModel request)
+        public async Task<Companion> AddCompanionAsync(Companion request)
         {
-            var companion = _mapper.Map<Companion>(request);
-            await _dbContext.Companions.AddAsync(companion);
+            await _dbContext.Companions.AddAsync(request);
             await _dbContext.SaveChangesAsync();
 
-            return companion;
+            return request;
         }
 
         public async Task<bool> DeleteCompanionAsync(int companionId)
         {
             var companion = await FindCompanionById(companionId);
-            if (companion is null)
-                return false;
-
+            
             _dbContext.Companions.Remove(companion);
             await _dbContext.SaveChangesAsync();
 
@@ -46,8 +41,7 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
         public async Task<bool> UpdateCompanionAsync(CompanionRequestModel request, int companionId)
         {
             var companion = await FindCompanionById(companionId);
-            if (companion is null)
-                return false;
+
             if (!string.IsNullOrEmpty(request.Name))
                 companion.Name = request.Name;
             if (!string.IsNullOrEmpty(request.WhoPlayed))
@@ -57,15 +51,13 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
 
             return true;
         }
-        private async Task<Companion?> FindCompanionById(int companionId)
-        {
-            var companion = await _dbContext.Companions.FindAsync(companionId);
-
-            return companion;
-        }
-        public async Task<Companion?> GetCompanionById(int companionId)
+        public async Task<Companion> GetCompanionById(int companionId)
         {
             return await FindCompanionById(companionId);
+        }
+        private async Task<Companion> FindCompanionById(int companionId)
+        {
+            return await _dbContext.Companions.FindAsync(companionId);
         }
     }
 }

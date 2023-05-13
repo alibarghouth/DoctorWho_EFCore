@@ -1,4 +1,5 @@
-﻿using DoctorWho.Db.DTOS;
+﻿using AutoMapper;
+using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.EnemiesRepository;
 
@@ -7,10 +8,12 @@ namespace DoctorWho.Services.EnemiesService
     public class EnemiesService : IEnemiesService
     {
         private readonly IEnemiesRepository _enemiesRepository;
+        private readonly IMapper _mapper;
 
-        public EnemiesService(IEnemiesRepository enemiesRepository)
+        public EnemiesService(IEnemiesRepository enemiesRepository, IMapper mapper)
         {
             _enemiesRepository = enemiesRepository;
+            _mapper = mapper;
         }
 
         public async Task<string> GetAllEnemiesNameByEpisodeId(int episodeId)
@@ -22,8 +25,9 @@ namespace DoctorWho.Services.EnemiesService
         {
             if (string.IsNullOrEmpty(request.Name) || string.IsNullOrEmpty(request.Description))
                 return "all input is required";
-            var enemy = await _enemiesRepository.AddEnemyAsync(request);
-            if (enemy is null)
+            var enemy = _mapper.Map<Enemy>(request);
+            var result = await _enemiesRepository.AddEnemyAsync(enemy);
+            if (result is null)
                 return "failed";
             return "success";
         }

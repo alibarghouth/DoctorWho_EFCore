@@ -1,4 +1,5 @@
-﻿using DoctorWho.Db.DTOS;
+﻿using AutoMapper;
+using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.EpisodesRepository;
 
@@ -7,13 +8,15 @@ namespace DoctorWho.Services.EpisodesService
     public class EpisodesService : IEpisodesService
     {
         private readonly IEpisodesRepository _episodesRepository;
+        private readonly IMapper _mapper;
 
-        public EpisodesService(IEpisodesRepository episodesRepository)
+        public EpisodesService(IEpisodesRepository episodesRepository, IMapper mapper)
         {
             _episodesRepository = episodesRepository;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<EpisodesView>> GetEpisode()
+        public async Task<List<EpisodesView>> GetEpisode()
         {
             return await _episodesRepository.GetEpisode();
         }
@@ -23,8 +26,10 @@ namespace DoctorWho.Services.EpisodesService
             if (string.IsNullOrEmpty(request.Notes) || string.IsNullOrEmpty(request.Title)
                 || string.IsNullOrEmpty(request.Episodetype))
                 return "all input is required";
-            var episode = await _episodesRepository.AddEpisodeAsync(request);
-            if (episode is null)
+            var episode = _mapper.Map<Episode>(request);
+            var result = await _episodesRepository.AddEpisodeAsync(episode);
+            
+            if (result is null)
                 return "failed";
             return "success";
         }

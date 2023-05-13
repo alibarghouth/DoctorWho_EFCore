@@ -2,7 +2,7 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 
-namespace DoctorWho.Db.Helper;
+namespace DoctorWho.Db.Profiles;
 
 public class MappingProfile : Profile
 {

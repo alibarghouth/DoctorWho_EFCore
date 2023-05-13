@@ -8,5 +8,5 @@ public interface IDoctorService
     Task<string> AddDoctorAsync(DoctorRequestModel request);
     Task<string> DeleteDoctorAsync(int doctorId);
     Task<string> UpdateDoctorAsync(DoctorRequestModel request, int doctorId);
-    Task<IEnumerable<Doctor>> GetAllDoctors();
+    Task<List<Doctor>> GetAllDoctors();
 }

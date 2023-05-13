@@ -5,5 +5,5 @@ namespace DoctorWho.Db.Repositories.EpisodeEnemyRepository;
 
 public interface IEpisodeEnemyRepository
 {
-    Task<EpisodeEnemy?> AddEnemyToEpisode(EpisodeEnemyRequestModel request);
+    Task<EpisodeEnemy> AddEnemyToEpisode(EpisodeEnemy request);
 }

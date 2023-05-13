@@ -5,5 +5,5 @@ namespace DoctorWho.Db.Repositories.EpisodeCompanionRepository;
 
 public interface IEpisodeCompanionRepository
 {
-    Task<EpisodeCompanion?> AddCompanionToEpisode(EpisodeCompanionRequestModel request);
+    Task<EpisodeCompanion> AddCompanionToEpisode(EpisodeCompanion request);
 }

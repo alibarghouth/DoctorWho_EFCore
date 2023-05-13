@@ -31,23 +31,14 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
 
             return true;
         }
-        public async Task<bool> UpdateEpisodeAsync(EpisodeRequestModel request, int enemyId)
+        public async Task<bool> UpdateEpisodeAsync(Episode request)
         {
-            var episode = await FindEpisodeById(enemyId);
-            
-            if (!string.IsNullOrEmpty(request.Title))
-                episode.Title = request.Title;
-            if (!string.IsNullOrEmpty(request.Notes))
-                episode.Notes = request.Notes;
-            if (!string.IsNullOrEmpty(request.Episodetype))
-                episode.Episodetype = request.Episodetype;
-            
-            _dbContext.Episodes.Update(episode);
+            _dbContext.Episodes.Update(request);
             await _dbContext.SaveChangesAsync();
 
             return true;
         }
-        private async Task<Episode> FindEpisodeById(int episodeId)
+        public async Task<Episode> FindEpisodeById(int episodeId)
         {
             return await _dbContext.Episodes.FindAsync(episodeId);
         }

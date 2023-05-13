@@ -32,15 +32,9 @@ public class DoctorRepository : IDoctorRepository
         return true;
     }
 
-    public async Task<bool> UpdateDoctorAsync(DoctorRequestModel request, int doctorId)
+    public async Task<bool> UpdateDoctorAsync(Doctor request)
     {
-        var doctor = await FindDoctorById(doctorId);
-
-        if (!string.IsNullOrEmpty(request.Name))
-            doctor.Name = request.Name;
-        if (!string.IsNullOrEmpty(request.Number))
-            doctor.Number = request.Number;
-        _dbContext.Doctors.Update(doctor);
+        _dbContext.Doctors.Update(request);
         await _dbContext.SaveChangesAsync();
 
         return true;
@@ -51,7 +45,7 @@ public class DoctorRepository : IDoctorRepository
         return await _dbContext.Doctors.ToListAsync();
     }
 
-    private async Task<Doctor> FindDoctorById(int doctorId)
+    public async Task<Doctor> FindDoctorById(int doctorId)
     {
         return await _dbContext.Doctors.FindAsync(doctorId);
     }

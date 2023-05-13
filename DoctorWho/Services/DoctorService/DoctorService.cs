@@ -41,7 +41,13 @@ public class DoctorService : IDoctorService
     {
         if (doctorId == 0)
             return "failed";
-        var result = await _doctorRepository.UpdateDoctorAsync(request, doctorId);
+        var doctor = await _doctorRepository.FindDoctorById(doctorId);
+        if (!string.IsNullOrEmpty(request.Name))
+            doctor.Name = request.Name;
+        if (!string.IsNullOrEmpty(request.Number))
+            doctor.Number = request.Number;
+        
+        var result = await _doctorRepository.UpdateDoctorAsync(doctor);
         if (!result)
             return "failed";
         return "success";

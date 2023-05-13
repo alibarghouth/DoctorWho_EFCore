@@ -48,7 +48,16 @@ namespace DoctorWho.Services.EpisodesService
         {
             if (episodeId == 0)
                 return "failed";
-            var result = await _episodesRepository.UpdateEpisodeAsync(request, episodeId);
+            
+            var episode = await _episodesRepository.FindEpisodeById(episodeId);
+            if (!string.IsNullOrEmpty(request.Title))
+                episode.Title = request.Title;
+            if (!string.IsNullOrEmpty(request.Notes))
+                episode.Notes = request.Notes;
+            if (!string.IsNullOrEmpty(request.Episodetype))
+                episode.Episodetype = request.Episodetype;
+            
+            var result = await _episodesRepository.UpdateEpisodeAsync(episode);
             if (!result)
                 return "failed";
             return "success";

@@ -35,16 +35,9 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
             return true;
         }
 
-        public async Task<bool> UpdateEnemyAsync(EnemyRequestModel request, int enemyId)
+        public async Task<bool> UpdateEnemyAsync(Enemy request)
         {
-            var enemy = await FindEnemyById(enemyId);
-
-            if (!string.IsNullOrEmpty(request.Name))
-                enemy.Name = request.Name;
-            if (!string.IsNullOrEmpty(request.Description))
-                enemy.Description = request.Description;
-
-            _dbContext.Enemies.Update(enemy);
+             _dbContext.Enemies.Update(request);
             await _dbContext.SaveChangesAsync();
 
             return true;
@@ -55,7 +48,7 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
             return await FindEnemyById(enemyId);
         }
 
-        private async Task<Enemy> FindEnemyById(int enemyId)
+        public async Task<Enemy> FindEnemyById(int enemyId)
         {
             return await _dbContext.Enemies.FindAsync(enemyId);
         }

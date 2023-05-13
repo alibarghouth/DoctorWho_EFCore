@@ -46,7 +46,14 @@ namespace DoctorWho.Services.EnemiesService
         {
             if (enemyId == 0)
                 return "failed";
-            var result = await _enemiesRepository.UpdateEnemyAsync(request, enemyId);
+            var enemy = await _enemiesRepository.FindEnemyById(enemyId);
+
+            if (!string.IsNullOrEmpty(request.Name))
+                enemy.Name = request.Name;
+            if (!string.IsNullOrEmpty(request.Description))
+                enemy.Description = request.Description;
+
+            var result = await _enemiesRepository.UpdateEnemyAsync(enemy);
             if (!result)
                 return "failed";
             return "success";

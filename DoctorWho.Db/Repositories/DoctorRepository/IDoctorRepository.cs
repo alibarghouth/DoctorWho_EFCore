@@ -7,6 +7,7 @@ public interface IDoctorRepository
 {
     Task<Doctor> AddDoctorAsync(Doctor request);
     Task<bool> DeleteDoctorAsync(int doctorId);
-    Task<bool> UpdateDoctorAsync(DoctorRequestModel request, int doctorId);
+    Task<bool> UpdateDoctorAsync(Doctor request);
     Task<List<Doctor>> GetAllDoctors();
+    Task<Doctor> FindDoctorById(int doctorId);
 }

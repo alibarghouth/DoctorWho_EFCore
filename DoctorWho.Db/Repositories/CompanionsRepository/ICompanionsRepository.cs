@@ -8,7 +8,8 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
          Task<string> GetCompanionsByEpisodeId(int episodeId);
          Task<Companion> AddCompanionAsync(Companion request);
          Task<bool> DeleteCompanionAsync(int companionId);
-         Task<bool> UpdateCompanionAsync(CompanionRequestModel request, int companionId);
+         Task<bool> UpdateCompanionAsync(Companion request);
          Task<Companion> GetCompanionById(int companionId);
+         Task<Companion> FindCompanionById(int companionId);
     }
 }

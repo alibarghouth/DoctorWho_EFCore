@@ -29,20 +29,15 @@ public class AuthorRepository : IAuthorRepository
         return true;
     }
 
-    public async Task<bool> UpdateAuthorAsync(AuthorRequestModel request, int authorId)
+    public async Task<bool> UpdateAuthorAsync(Author request)
     {
-        var author = await FindAuthorById(authorId);
-        
-        if (!string.IsNullOrEmpty(request.Name))
-            author.Name = request.Name;
-        
-        _dbContext.Authors.Update(author);
+        _dbContext.Authors.Update(request);
         await _dbContext.SaveChangesAsync();
 
         return true;
     }
 
-    private async Task<Author> FindAuthorById(int authorId)
+    public async Task<Author> FindAuthorById(int authorId)
     {
         return await _dbContext.Authors.FindAsync(authorId);
     }

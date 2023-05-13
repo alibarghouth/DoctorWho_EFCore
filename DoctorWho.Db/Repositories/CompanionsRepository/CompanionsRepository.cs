@@ -37,15 +37,9 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
             return true;
         }
 
-        public async Task<bool> UpdateCompanionAsync(CompanionRequestModel request, int companionId)
+        public async Task<bool> UpdateCompanionAsync(Companion request)
         {
-            var companion = await FindCompanionById(companionId);
-
-            if (!string.IsNullOrEmpty(request.Name))
-                companion.Name = request.Name;
-            if (!string.IsNullOrEmpty(request.WhoPlayed))
-                companion.WhoPlayed = request.WhoPlayed;
-            _dbContext.Companions.Update(companion);
+            _dbContext.Companions.Update(request);
             await _dbContext.SaveChangesAsync();
 
             return true;
@@ -54,7 +48,7 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
         {
             return await FindCompanionById(companionId);
         }
-        private async Task<Companion> FindCompanionById(int companionId)
+        public async Task<Companion> FindCompanionById(int companionId)
         {
             return await _dbContext.Companions.FindAsync(companionId);
         }

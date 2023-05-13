@@ -43,7 +43,12 @@ public class AuthorService : IAuthorService
     {
         if (authorId == 0)
             return "failed";
-        var result = await _authorRepository.UpdateAuthorAsync(request, authorId);
+        
+        var author = await _authorRepository.FindAuthorById(authorId);
+        if (!string.IsNullOrEmpty(request.Name))
+            author.Name = request.Name;
+
+        var result = await _authorRepository.UpdateAuthorAsync(author);
         if (!result)
             return "failed";
         return "success";

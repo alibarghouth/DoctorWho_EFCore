@@ -47,7 +47,14 @@ namespace DoctorWho.Services.CompanionsService
         {
             if (companionId == 0)
                 return "failed";
-            var result = await _companionsRepository.UpdateCompanionAsync(request, companionId);
+            
+            var companion = await _companionsRepository.FindCompanionById(companionId);
+            
+            if (!string.IsNullOrEmpty(request.Name))
+                companion.Name = request.Name;
+            if (!string.IsNullOrEmpty(request.WhoPlayed))
+                companion.WhoPlayed = request.WhoPlayed;
+            var result = await _companionsRepository.UpdateCompanionAsync(companion);
             if (!result)
                 return "failed";
             return "success";

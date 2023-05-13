@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using DoctorWho.Db.Context;
-using DoctorWho.Db.DTOS;
+﻿using DoctorWho.Db.Context;
 using DoctorWho.Db.Model;
 
 namespace DoctorWho.Db.Repositories.EpisodeCompanionRepository;

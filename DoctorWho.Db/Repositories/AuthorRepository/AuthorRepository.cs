@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DoctorWho.Db.Context;
+﻿using DoctorWho.Db.Context;
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 

@@ -8,10 +8,10 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<CompanionRequestModel, Companion>();
-        CreateMap<DoctorRequestModel, Doctor>();
-        CreateMap<AuthorRequestModel, Author>();
-        CreateMap<EpisodeRequestModel, Episode>();
-        CreateMap<EnemyRequestModel, Enemy>();
+        CreateMap<CompanionRequestModel, Companion>().ReverseMap();
+        CreateMap<DoctorRequestModel, Doctor>().ReverseMap();
+        CreateMap<AuthorRequestModel, Author>().ReverseMap();
+        CreateMap<EpisodeRequestModel, Episode>().ReverseMap();
+        CreateMap<EnemyRequestModel, Enemy>().ReverseMap();
     }
 }

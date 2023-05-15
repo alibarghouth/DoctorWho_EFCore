@@ -2,6 +2,7 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.EnemiesRepository;
+using DoctorWho.Exceptions;
 
 namespace DoctorWho.Services.EnemiesService
 {
@@ -21,31 +22,30 @@ namespace DoctorWho.Services.EnemiesService
             return await _enemiesRepository.GetAllEnemiesNameByEpisodeId(episodeId);
         }
 
-        public async Task<string> AddEnemyAsync(EnemyRequestModel request)
+        public async Task<EnemyRequestModel> AddEnemyAsync(EnemyRequestModel request)
         {
             if (string.IsNullOrEmpty(request.Name) || string.IsNullOrEmpty(request.Description))
-                return "all input is required";
+                throw new DoctorWhoException();
             var enemy = _mapper.Map<Enemy>(request);
-            var result = await _enemiesRepository.AddEnemyAsync(enemy);
-            if (result is null)
-                return "failed";
-            return "success";
+            var result = _mapper.Map<EnemyRequestModel>(await _enemiesRepository.AddEnemyAsync(enemy));
+
+            return result is null ? throw new NullReferenceException() : result;
         }
 
-        public async Task<string> DeleteEnemyAsync(int enemyId)
+        public async Task<bool> DeleteEnemyAsync(int enemyId)
         {
             if (enemyId == 0)
-                return "failed";
+                return false;
             var result = await _enemiesRepository.DeleteEnemyAsync(enemyId);
             if (!result)
-                return "failed";
-            return "success";
+                return false;
+            return true;
         }
 
-        public async Task<string> UpdateEnemyAsync(EnemyRequestModel request, int enemyId)
+        public async Task<EnemyRequestModel> UpdateEnemyAsync(EnemyRequestModel request, int enemyId)
         {
             if (enemyId == 0)
-                return "failed";
+                throw new DoctorWhoException();
             var enemy = await _enemiesRepository.FindEnemyById(enemyId);
 
             if (!string.IsNullOrEmpty(request.Name))
@@ -53,13 +53,11 @@ namespace DoctorWho.Services.EnemiesService
             if (!string.IsNullOrEmpty(request.Description))
                 enemy.Description = request.Description;
 
-            var result = await _enemiesRepository.UpdateEnemyAsync(enemy);
-            if (!result)
-                return "failed";
-            return "success";
+            var result = _mapper.Map<EnemyRequestModel>(await _enemiesRepository.UpdateEnemyAsync(enemy));
+            return result is null ? throw new NullReferenceException() : result;
         }
 
-        public async Task<Enemy?> GetEnemyById(int enemyId)
+        public async Task<Enemy> GetEnemyById(int enemyId)
         {
             return await _enemiesRepository.GetEnemyById(enemyId);
         }

@@ -2,6 +2,7 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.EpisodeCompanionRepository;
+using DoctorWho.Exceptions;
 
 namespace DoctorWho.Services.EpisodeCompanionService;
 
@@ -16,15 +17,13 @@ public class EpisodeCompanionService : IEpisodeCompanionService
         _mapper = mapper;
     }
 
-    public async Task<string> AddCompanionToEpisode(EpisodeCompanionRequestModel request)
+    public async Task<EpisodeCompanionRequestModel> AddCompanionToEpisode(EpisodeCompanionRequestModel request)
     {
-        if(request.CompanionId == 0 || request.EpisodeId == 0)
-            return "InValid input";
+        if (request.CompanionId == 0 || request.EpisodeId == 0)
+            throw new DoctorWhoException();
         var episodeCompanion = _mapper.Map<EpisodeCompanion>(request);
-        var result = await _companionRepository.AddCompanionToEpisode(episodeCompanion);
-        
-        if (result is null)
-            return "failed";
-        return "success";
+        var result = _mapper.Map<EpisodeCompanionRequestModel>(await _companionRepository.AddCompanionToEpisode(episodeCompanion));
+
+        return result is null ? throw new NullReferenceException() : result;
     }
 }

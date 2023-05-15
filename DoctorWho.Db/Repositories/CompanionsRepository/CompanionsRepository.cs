@@ -2,7 +2,6 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 
-
 namespace DoctorWho.Db.Repositories.CompanionsRepository
 {
     public class CompanionsRepository : ICompanionsRepository
@@ -29,7 +28,7 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
 
         public async Task<bool> DeleteCompanionAsync(int companionId)
         {
-            var companion = await FindCompanionById(companionId);
+            var companion = await FindCompanionById(companionId) ?? throw new NullReferenceException();
             
             _dbContext.Companions.Remove(companion);
             await _dbContext.SaveChangesAsync();
@@ -37,12 +36,12 @@ namespace DoctorWho.Db.Repositories.CompanionsRepository
             return true;
         }
 
-        public async Task<bool> UpdateCompanionAsync(Companion request)
+        public async Task<Companion> UpdateCompanionAsync(Companion request)
         {
             _dbContext.Companions.Update(request);
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            return request;
         }
         public async Task<Companion> GetCompanionById(int companionId)
         {

@@ -1,5 +1,4 @@
 ﻿using DoctorWho.Db.Context;
-using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 
 namespace DoctorWho.Db.Repositories.EnemiesRepository
@@ -14,7 +13,7 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
 
         public async Task<string> GetAllEnemiesNameByEpisodeId(int episodeId)
         {
-            return await  Task.Run(() => _dbContext.FnEnemies(episodeId));
+            return await Task.Run(() => _dbContext.FnEnemies(episodeId));
         }
 
         public async Task<Enemy> AddEnemyAsync(Enemy request)
@@ -27,7 +26,7 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
 
         public async Task<bool> DeleteEnemyAsync(int enemyId)
         {
-            var enemy = await FindEnemyById(enemyId);
+            var enemy = await FindEnemyById(enemyId) ?? throw new NullReferenceException();
 
             _dbContext.Enemies.Remove(enemy);
             await _dbContext.SaveChangesAsync();
@@ -35,12 +34,12 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
             return true;
         }
 
-        public async Task<bool> UpdateEnemyAsync(Enemy request)
+        public async Task<Enemy> UpdateEnemyAsync(Enemy request)
         {
-             _dbContext.Enemies.Update(request);
+            _dbContext.Enemies.Update(request);
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            return request;
         }
 
         public async Task<Enemy> GetEnemyById(int enemyId)

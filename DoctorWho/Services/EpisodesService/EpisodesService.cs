@@ -2,6 +2,7 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.EpisodesRepository;
+using DoctorWho.Exceptions;
 
 namespace DoctorWho.Services.EpisodesService
 {
@@ -21,34 +22,32 @@ namespace DoctorWho.Services.EpisodesService
             return await _episodesRepository.GetEpisode();
         }
 
-        public async Task<string> AddEpisodeAsync(EpisodeRequestModel request)
+        public async Task<EpisodeRequestModel> AddEpisodeAsync(EpisodeRequestModel request)
         {
             if (string.IsNullOrEmpty(request.Notes) || string.IsNullOrEmpty(request.Title)
                 || string.IsNullOrEmpty(request.Episodetype))
-                return "all input is required";
+                throw new DoctorWhoException();
             var episode = _mapper.Map<Episode>(request);
-            var result = await _episodesRepository.AddEpisodeAsync(episode);
-            
-            if (result is null)
-                return "failed";
-            return "success";
+            var result = _mapper.Map<EpisodeRequestModel>(await _episodesRepository.AddEpisodeAsync(episode));
+
+            return result is null ? throw new NullReferenceException() : result;
         }
 
-        public async Task<string> DeleteEpisodeAsync(int episodeId)
+        public async Task<bool> DeleteEpisodeAsync(int episodeId)
         {
             if (episodeId == 0)
-                return "failed";
+                return false;
             var result = await _episodesRepository.DeleteEpisodeAsync(episodeId);
             if (!result)
-                return "failed";
-            return "success";
+                return false;
+            return true;
         }
 
-        public async Task<string> UpdateEpisodeAsync(EpisodeRequestModel request, int episodeId)
+        public async Task<EpisodeRequestModel> UpdateEpisodeAsync(EpisodeRequestModel request, int episodeId)
         {
             if (episodeId == 0)
-                return "failed";
-            
+                throw new DoctorWhoException();
+
             var episode = await _episodesRepository.FindEpisodeById(episodeId);
             if (!string.IsNullOrEmpty(request.Title))
                 episode.Title = request.Title;
@@ -56,11 +55,10 @@ namespace DoctorWho.Services.EpisodesService
                 episode.Notes = request.Notes;
             if (!string.IsNullOrEmpty(request.Episodetype))
                 episode.Episodetype = request.Episodetype;
-            
-            var result = await _episodesRepository.UpdateEpisodeAsync(episode);
-            if (!result)
-                return "failed";
-            return "success";
+
+            var result = _mapper.Map<EpisodeRequestModel>(await _episodesRepository.UpdateEpisodeAsync(episode));
+
+            return result is null ? throw new NullReferenceException() : result;
         }
     }
 }

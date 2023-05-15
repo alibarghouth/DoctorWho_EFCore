@@ -6,9 +6,9 @@ namespace DoctorWho.Services.CompanionsService
     public interface ICompanionsService
     {
         Task<string> GetCompanionsByEpisodeId(int episodeId);
-        Task<string> AddCompanionAsync(CompanionRequestModel request);
-        Task<string> DeleteCompanionAsync(int companionId);
-        Task<string> UpdateCompanionAsync(CompanionRequestModel request, int companionId);
+        Task<CompanionRequestModel> AddCompanionAsync(CompanionRequestModel request);
+        Task<bool> DeleteCompanionAsync(int companionId);
+        Task<CompanionRequestModel> UpdateCompanionAsync(CompanionRequestModel request, int companionId);
         Task<Companion?> GetCompanionById(int companionId);
     }
 }

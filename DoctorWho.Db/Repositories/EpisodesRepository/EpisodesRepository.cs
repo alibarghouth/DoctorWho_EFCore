@@ -1,5 +1,4 @@
 ﻿using DoctorWho.Db.Context;
-using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +15,7 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
         {
             return await _dbContext.EpisodesView.ToListAsync();
         }
-        public async Task<Episode?> AddEpisodeAsync(Episode request)
+        public async Task<Episode> AddEpisodeAsync(Episode request)
         {
             await _dbContext.Episodes.AddAsync(request);
             await _dbContext.SaveChangesAsync();
@@ -25,18 +24,19 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
         }
         public async Task<bool> DeleteEpisodeAsync(int enemyId)
         {
-            var episode = await FindEpisodeById(enemyId);
+            var episode = await FindEpisodeById(enemyId) ?? throw new NullReferenceException();
+
             _dbContext.Episodes.Remove(episode);
             await _dbContext.SaveChangesAsync();
 
             return true;
         }
-        public async Task<bool> UpdateEpisodeAsync(Episode request)
+        public async Task<Episode> UpdateEpisodeAsync(Episode request)
         {
             _dbContext.Episodes.Update(request);
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            return request;
         }
         public async Task<Episode> FindEpisodeById(int episodeId)
         {

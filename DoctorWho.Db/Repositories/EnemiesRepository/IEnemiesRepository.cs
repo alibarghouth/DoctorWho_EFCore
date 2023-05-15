@@ -8,7 +8,7 @@ namespace DoctorWho.Db.Repositories.EnemiesRepository
         Task<string> GetAllEnemiesNameByEpisodeId(int episodeId);
         Task<Enemy> AddEnemyAsync(Enemy request);
         Task<bool> DeleteEnemyAsync(int enemyId);
-        Task<bool> UpdateEnemyAsync(Enemy request);
+        Task<Enemy> UpdateEnemyAsync(Enemy request);
         Task<Enemy> GetEnemyById(int enemyId);
         Task<Enemy> FindEnemyById(int enemyId);
     }

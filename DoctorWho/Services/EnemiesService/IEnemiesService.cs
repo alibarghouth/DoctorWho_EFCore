@@ -6,10 +6,10 @@ namespace DoctorWho.Services.EnemiesService
     public interface IEnemiesService
     {
         Task<string> GetAllEnemiesNameByEpisodeId(int episodeId);
-        Task<string> AddEnemyAsync(EnemyRequestModel request);
-        Task<string> DeleteEnemyAsync(int enemyId);
-        Task<string> UpdateEnemyAsync(EnemyRequestModel request, int enemyId);
-        Task<Enemy?> GetEnemyById(int enemyId);
+        Task<EnemyRequestModel> AddEnemyAsync(EnemyRequestModel request);
+        Task<bool> DeleteEnemyAsync(int enemyId);
+        Task<EnemyRequestModel> UpdateEnemyAsync(EnemyRequestModel request, int enemyId);
+        Task<Enemy> GetEnemyById(int enemyId);
 
     }
 }

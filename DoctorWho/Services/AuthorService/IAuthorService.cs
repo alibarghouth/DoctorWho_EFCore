@@ -4,7 +4,7 @@ namespace DoctorWho.Services.AuthorService;
 
 public interface IAuthorService
 {
-    Task<string> AddAuthorAsync(AuthorRequestModel request);
-    Task<string> DeleteAuthorAsync(int authorId);
-    Task<string> UpdateAuthorAsync(AuthorRequestModel request, int authorId);
+    Task<AuthorRequestModel> AddAuthorAsync(AuthorRequestModel request);
+    Task<bool> DeleteAuthorAsync(int authorId);
+    Task<AuthorRequestModel> UpdateAuthorAsync(AuthorRequestModel request, int authorId);
 }

@@ -6,9 +6,9 @@ namespace DoctorWho.Db.Repositories.EpisodesRepository
     public interface IEpisodesRepository
     {
         Task<List<EpisodesView>> GetEpisode();
-        Task<Episode?> AddEpisodeAsync(Episode request);
+        Task<Episode> AddEpisodeAsync(Episode request);
         Task<bool> DeleteEpisodeAsync(int episodeId);
-        Task<bool> UpdateEpisodeAsync(Episode request);
+        Task<Episode> UpdateEpisodeAsync(Episode request);
         Task<Episode> FindEpisodeById(int episodeId);
     }
 }

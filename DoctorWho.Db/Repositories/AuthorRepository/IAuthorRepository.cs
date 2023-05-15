@@ -7,6 +7,6 @@ public interface IAuthorRepository
 {
     Task<Author> AddAuthorAsync(Author request);
     Task<bool> DeleteAuthorAsync(int authorId);
-    Task<bool> UpdateAuthorAsync(Author request);
+    Task<Author> UpdateAuthorAsync(Author request);
     Task<Author> FindAuthorById(int authorId);
 }

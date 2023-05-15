@@ -1,5 +1,4 @@
 ﻿using DoctorWho.Db.Context;
-using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +23,7 @@ public class DoctorRepository : IDoctorRepository
 
     public async Task<bool> DeleteDoctorAsync(int doctorId)
     {
-        var doctor = await FindDoctorById(doctorId);
+        var doctor = await FindDoctorById(doctorId) ?? throw new NullReferenceException();
 
         _dbContext.Doctors.Remove(doctor);
         await _dbContext.SaveChangesAsync();
@@ -32,12 +31,12 @@ public class DoctorRepository : IDoctorRepository
         return true;
     }
 
-    public async Task<bool> UpdateDoctorAsync(Doctor request)
+    public async Task<Doctor> UpdateDoctorAsync(Doctor request)
     {
         _dbContext.Doctors.Update(request);
         await _dbContext.SaveChangesAsync();
 
-        return true;
+        return request;
     }
 
     public async Task<List<Doctor>> GetAllDoctors()

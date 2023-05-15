@@ -5,5 +5,5 @@ namespace DoctorWho.Services.EpisodeCompanionService;
 
 public interface IEpisodeCompanionService
 {
-    Task<string> AddCompanionToEpisode(EpisodeCompanionRequestModel request);
+    Task<EpisodeCompanionRequestModel> AddCompanionToEpisode(EpisodeCompanionRequestModel request);
 }

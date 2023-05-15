@@ -2,6 +2,7 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.EpisodeEnemyRepository;
+using DoctorWho.Exceptions;
 
 namespace DoctorWho.Services.EpisodeEnemyService;
 
@@ -16,15 +17,13 @@ public class EpisodeEnemyService : IEpisodeEnemyService
         _mapper = mapper;
     }
 
-    public async Task<string> AddEnemyToEpisode(EpisodeEnemyRequestModel request)
+    public async Task<EpisodeEnemyRequestModel> AddEnemyToEpisode(EpisodeEnemyRequestModel request)
     {
-        if(request.EnemyId == 0 || request.EpisodeId == 0)
-            return "InValid input";
+        if (request.EnemyId == 0 || request.EpisodeId == 0)
+            throw new DoctorWhoException();
         var episodeEnemy = _mapper.Map<EpisodeEnemy>(request);
-        var result = await _episodeEnemyRepository.AddEnemyToEpisode(episodeEnemy);
-        
-        if (result is null)
-            return "failed";
-        return "success";
+        var result = _mapper.Map<EpisodeEnemyRequestModel>(await _episodeEnemyRepository.AddEnemyToEpisode(episodeEnemy));
+
+        return result is null ? throw new NullReferenceException() : result;
     }
 }

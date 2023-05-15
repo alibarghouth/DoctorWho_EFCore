@@ -6,8 +6,8 @@ namespace DoctorWho.Services.EpisodesService
     public interface IEpisodesService
     {
         Task<List<EpisodesView>> GetEpisode();
-        Task<string> AddEpisodeAsync(EpisodeRequestModel request);
-        Task<string> DeleteEpisodeAsync(int episodeId);
-        Task<string> UpdateEpisodeAsync(EpisodeRequestModel request, int episodeId);
+        Task<EpisodeRequestModel> AddEpisodeAsync(EpisodeRequestModel request);
+        Task<bool> DeleteEpisodeAsync(int episodeId);
+        Task<EpisodeRequestModel> UpdateEpisodeAsync(EpisodeRequestModel request, int episodeId);
     }
 }

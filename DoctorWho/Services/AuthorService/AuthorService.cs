@@ -2,6 +2,7 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.AuthorRepository;
+using DoctorWho.Exceptions;
 
 namespace DoctorWho.Services.AuthorService;
 
@@ -16,41 +17,36 @@ public class AuthorService : IAuthorService
         _mapper = mapper;
     }
 
-    public async Task<string> AddAuthorAsync(AuthorRequestModel request)
+    public async Task<AuthorRequestModel> AddAuthorAsync(AuthorRequestModel request)
     {
         if (string.IsNullOrEmpty(request.Name))
-            return "all input is required";
+            throw new DoctorWhoException();
         var author = _mapper.Map<Author>(request);
-        var result =  await _authorRepository.AddAuthorAsync(author);
-        
-        if (result is null)
-            return "failed";
-        
-        return "success";
+        var result = _mapper.Map<AuthorRequestModel>(await _authorRepository.AddAuthorAsync(author));
+
+        return result is null ? throw new NullReferenceException() : result;
     }
 
-    public async Task<string> DeleteAuthorAsync(int authorId)
+    public async Task<bool> DeleteAuthorAsync(int authorId)
     {
         if (authorId == 0)
-            return "failed";
+            return false;
         var result = await _authorRepository.DeleteAuthorAsync(authorId);
         if (!result)
-            return "failed";
-        return "success";
+            return false;
+        return true;
     }
 
-    public async Task<string> UpdateAuthorAsync(AuthorRequestModel request, int authorId)
+    public async Task<AuthorRequestModel> UpdateAuthorAsync(AuthorRequestModel request, int authorId)
     {
         if (authorId == 0)
-            return "failed";
+            throw new DoctorWhoException();
         
         var author = await _authorRepository.FindAuthorById(authorId);
         if (!string.IsNullOrEmpty(request.Name))
             author.Name = request.Name;
+        var result = _mapper.Map<AuthorRequestModel>( await _authorRepository.UpdateAuthorAsync(author));
 
-        var result = await _authorRepository.UpdateAuthorAsync(author);
-        if (!result)
-            return "failed";
-        return "success";
+        return result is null ? throw new NullReferenceException() : result;
     }
 }

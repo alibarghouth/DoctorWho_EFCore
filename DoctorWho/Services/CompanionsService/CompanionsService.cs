@@ -2,6 +2,7 @@
 using DoctorWho.Db.DTOS;
 using DoctorWho.Db.Model;
 using DoctorWho.Db.Repositories.CompanionsRepository;
+using DoctorWho.Exceptions;
 
 namespace DoctorWho.Services.CompanionsService
 {
@@ -21,43 +22,41 @@ namespace DoctorWho.Services.CompanionsService
             return await _companionsRepository.GetCompanionsByEpisodeId(episodeId);
         }
 
-        public async Task<string> AddCompanionAsync(CompanionRequestModel request)
+        public async Task<CompanionRequestModel> AddCompanionAsync(CompanionRequestModel request)
         {
             if (string.IsNullOrEmpty(request.Name) || string.IsNullOrEmpty(request.WhoPlayed))
-                return "all input is required";
+                throw new DoctorWhoException();
+
             var companion = _mapper.Map<Companion>(request);
-            var result = await _companionsRepository.AddCompanionAsync(companion);
-            if (result is null)
-                return "failed";
-            
-            return "success";
+            var result = _mapper.Map<CompanionRequestModel>(await _companionsRepository.AddCompanionAsync(companion));
+
+            return result is null ? throw new NullReferenceException() : result;
         }
 
-        public async Task<string> DeleteCompanionAsync(int companionId)
+        public async Task<bool> DeleteCompanionAsync(int companionId)
         {
             if (companionId == 0)
-                return "failed";
+                return false;
             var result = await _companionsRepository.DeleteCompanionAsync(companionId);
             if (!result)
-                return "failed";
-            return "success";
+                return false;
+            return false;
         }
 
-        public async Task<string> UpdateCompanionAsync(CompanionRequestModel request, int companionId)
+        public async Task<CompanionRequestModel> UpdateCompanionAsync(CompanionRequestModel request, int companionId)
         {
             if (companionId == 0)
-                return "failed";
-            
+                throw new DoctorWhoException();
+
             var companion = await _companionsRepository.FindCompanionById(companionId);
-            
+
             if (!string.IsNullOrEmpty(request.Name))
                 companion.Name = request.Name;
             if (!string.IsNullOrEmpty(request.WhoPlayed))
                 companion.WhoPlayed = request.WhoPlayed;
-            var result = await _companionsRepository.UpdateCompanionAsync(companion);
-            if (!result)
-                return "failed";
-            return "success";
+            var result = _mapper.Map<CompanionRequestModel>(await _companionsRepository.UpdateCompanionAsync(companion));
+
+            return result is null ? throw new NullReferenceException() : result;
         }
 
         public async Task<Companion?> GetCompanionById(int companionId)

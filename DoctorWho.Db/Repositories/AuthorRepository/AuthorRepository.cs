@@ -22,19 +22,19 @@ public class AuthorRepository : IAuthorRepository
 
     public async Task<bool> DeleteAuthorAsync(int authorId)
     {
-        var author = await FindAuthorById(authorId);
+        var author = await FindAuthorById(authorId) ?? throw new NullReferenceException();
         _dbContext.Authors.Remove(author);
         await _dbContext.SaveChangesAsync();
 
         return true;
     }
 
-    public async Task<bool> UpdateAuthorAsync(Author request)
+    public async Task<Author> UpdateAuthorAsync(Author request)
     {
         _dbContext.Authors.Update(request);
         await _dbContext.SaveChangesAsync();
 
-        return true;
+        return request;
     }
 
     public async Task<Author> FindAuthorById(int authorId)
